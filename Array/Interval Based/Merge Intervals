@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>>vec;
+        sort(intervals.begin(),intervals.end());
+        int st = intervals[0][0];
+        int en = intervals[0][1];
+        for(int i = 1; i < intervals.size(); i++){
+            if(en >= intervals[i][0]){
+                st = min(intervals[i][0],st);
+                en = max(intervals[i][1],en);
+            }
+            else{
+                vec.push_back({st,en});
+                st = intervals[i][0];
+                en = intervals[i][1];
+            }
+        }
+        vec.push_back({st,en});
+        return vec;
+    }
+};
