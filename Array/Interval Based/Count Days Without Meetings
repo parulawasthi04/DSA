@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countDays(int days, vector<vector<int>>& meetings) {
+
+        sort(meetings.begin(),meetings.end());
+        
+        int st = meetings[0][0];
+        int en = meetings[0][1];
+
+        for(int i = 1; i < meetings.size(); i++){
+            if(en >= meetings[i][0]){
+                en = max(en, meetings[i][1]);
+            }
+            else{
+                days -= (en - st + 1);
+                st = meetings[i][0];
+                en = meetings[i][1];
+            }
+        }
+
+        days -= (en - st + 1);
+        
+        return days;
+    }
+};
