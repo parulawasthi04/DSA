@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int n;
+    void solve(int idx, vector<int>& nums, vector<vector<int>>& ans, vector<int>& res){
+        if(idx >= n){
+            ans.push_back(res);
+            return;
+        }
+
+        res.push_back(nums[idx]);
+        solve(idx + 1, nums, ans, res);
+        res.pop_back();
+        solve(idx + 1, nums, ans, res);
+    }
+    int countMaxOrSubsets(vector<int>& nums) {
+        int cnt = 0;
+        n = nums.size();
+        int c = 0;
+
+        for(int i = 0; i < n; i++){
+            c |= nums[i];
+        }
+
+        vector<vector<int>>ans;
+        vector<int>res;
+
+        solve(0, nums, ans, res);
+
+        for(int i = 0; i < ans.size(); i++){
+            int newOr = 0;
+            for(int j = 0; j < ans[i].size(); j++){
+                newOr |= ans[i][j];
+            }
+            if(newOr == c){
+                cnt++;
+            }
+        }
+
+        return cnt;
+    }
+};
